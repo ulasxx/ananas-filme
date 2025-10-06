@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Ömer Ahmet | Ananas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* 🔮 GENEL AYARLAR */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at 30% 20%, #090909, #000);
+      color: #fff;
+    }
+
+    /* 🌌 ANİMASYONLU ARKA PLAN */
+    .bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+      background: radial-gradient(circle at center, #111 0%, #000 80%);
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.7;
+      animation: float 14s ease-in-out infinite alternate;
+    }
+
+    .orb:nth-child(1) {
+      top: 10%;
+      left: 20%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255,0,200,0.4), transparent 70%);
+    }
+
+    .orb:nth-child(2) {
+      bottom: 15%;
+      right: 15%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0,255,255,0.4), transparent 70%);
+      animation-delay: 4s;
+    }
+
+    @keyframes float {
+      0% { transform: translate(0,0) scale(1); }
+      100% { transform: translate(80px,-80px) scale(1.2); }
+    }
+
+    /* 💎 İÇERİK KUTUSU */
+    .container {
+      position: relative;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 30px;
+      padding: 50px 40px;
+      max-width: 950px;
+      width: 100%;
+      margin: 100px auto;
+      box-shadow: 0 0 60px rgba(0, 255, 255, 0.2);
+      backdrop-filter: blur(20px);
+      border: 3px solid transparent;
+      animation: fadeUp 1.2s ease forwards;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      transition: transform 0.6s ease;
+    }
+
+    .container:hover {
+      transform: rotateY(4deg) rotateX(2deg) scale(1.02);
+      box-shadow: 0 0 80px rgba(255, 0, 255, 0.3);
+    }
+
+    .container::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      padding: 3px;
+      border-radius: 30px;
+      background: linear-gradient(120deg, #ff00cc, #00ffff, #ffcc00, #00ff99, #ff00ff);
+      background-size: 400% 400%;
+      animation: borderFlow 5s linear infinite;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      z-index: -1;
+    }
+
+    @keyframes borderFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ✨ BAŞLIK */
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 25px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, #ff00cc, #00ffff, #ffcc00, #ff00ff);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientText 6s ease infinite;
+      text-shadow: 0 0 40px rgba(255,255,255,0.2);
+    }
+
+    @keyframes gradientText {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* 🖼️ GÖRSEL */
+    img {
+      width: 100%;
+      max-height: 480px;
+      object-fit: cover;
+      border-radius: 25px;
+      margin-bottom: 30px;
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      box-shadow: 0 0 50px rgba(0, 255, 255, 0.2);
+    }
+
+    img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 80px rgba(255, 0, 255, 0.4);
+    }
+
+    /* 📖 METİN */
+    p {
+      font-size: 1.15rem;
+      color: #eee;
+      margin: 15px 0;
+      line-height: 1.6;
+      animation: fadeIn 1.2s ease;
+    }
+
+    p strong {
+      color: #00ffff;
+      text-shadow: 0 0 10px rgba(0,255,255,0.6);
+    }
+
+    /* 🎥 VİDEO */
+    video {
+      width: 100%;
+      margin-top: 30px;
+      border-radius: 25px;
+      border: 2px solid rgba(255,255,255,0.3);
+      box-shadow: 0 0 50px rgba(0, 255, 255, 0.3);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    video:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 70px rgba(255, 0, 255, 0.5);
+    }
+
+    /* 🔗 GERİ DÖN BUTONU */
+    .back-link {
+      display: inline-block;
+      margin-top: 40px;
+      padding: 14px 38px;
+      background: linear-gradient(90deg, #ff00cc, #00ffff, #ffcc00, #00ff99);
+      background-size: 300%;
+      color: #000;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 40px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, background-position 1.5s ease;
+      box-shadow: 0 0 30px rgba(255,255,255,0.3);
+      animation: gradientFlow 4s linear infinite;
+    }
+
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .back-link:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 0 60px rgba(255, 255, 255, 0.6);
+    }
+
+    /* 🌟 ANİMASYONLAR */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* 📱 RESPONSIVE */
+    @media (max-width: 768px) {
+      .container {
+        padding: 30px 20px;
+        border-radius: 20px;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      img {
+        max-height: 350px;
+      }
+
+      .back-link {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg">
+    <div class="orb"></div>
+    <div class="orb"></div>
+  </div>
+
+  <div class="container">
+    <h1>ÖMER AHMET</h1>
+
+    <img src="an.jpg" alt="Ömer Ahmet Afişi">
+
+    <p><strong>Tür:</strong> Aşk / 2025</p>
+    <p><strong>Özet:</strong> Efsanevi karikatür serisi <em>Ömer Ahmet</em>’in büyüleyici dizi uyarlaması: <strong>ANANAS</strong>. Sürükleyici aşk, derin dram ve sinematik görselliğin birleştiği bu yapım, kalbinize dokunacak. Her sahne bir tablo, her replik bir şiir gibi. 🎬✨</p>
+
+    <video controls>
+      <source src="Adsız tasarım (1).mp4" type="video/mp4">
+      Tarayıcınız video etiketini desteklemiyor.
+    </video>
+
+    <a href="index.html" class="back-link">← Ana Sayfaya Dön</a>
+  </div>
+</body>
+</html>
