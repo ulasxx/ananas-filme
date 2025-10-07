@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ananas | Bölüm Seçimi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      position: relative;
+      min-height: 100vh;
+      background: radial-gradient(circle at 30% 30%, #222 0%, #0a0a0a 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    /* Parçacık arka planı */
+    #particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #ff0080, #ffcc00, #00ffff);
+      width: 6px;
+      height: 6px;
+      animation: float 10s linear infinite;
+      opacity: 0.7;
+      filter: blur(2px);
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+      30% { opacity: 0.8; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+
+    /* Navbar */
+    .navbar {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 20px 40px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 4px 25px rgba(0,0,0,0.5);
+      z-index: 100;
+      animation: slideDown 1s ease forwards;
+    }
+
+    .navbar h1 {
+      font-size: 2rem;
+      background: linear-gradient(90deg, #ff00cc, #3333ff, #00ffff, #ffcc00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 10px rgba(255,255,255,0.3);
+      letter-spacing: 2px;
+      animation: glowTitle 6s linear infinite;
+    }
+
+    @keyframes glowTitle {
+      0%, 100% { filter: hue-rotate(0deg); }
+      50% { filter: hue-rotate(360deg); }
+    }
+
+    .navbar nav a {
+      color: #ccc;
+      text-decoration: none;
+      margin-left: 30px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .navbar nav a::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #ff0080, #00ffff);
+      left: 0;
+      bottom: -6px;
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
+    .navbar nav a:hover {
+      color: #fff;
+      text-shadow: 0 0 6px #00ffff;
+    }
+
+    .navbar nav a:hover::after {
+      width: 100%;
+    }
+
+    /* İçerik kutusu */
+    .content {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 60px 40px;
+      border-radius: 25px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 15px 45px rgba(0,0,0,0.6);
+      text-align: center;
+      z-index: 1;
+      position: relative;
+      animation: popUp 1s ease 0.5s forwards;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    @keyframes popUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .content::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 25px;
+      padding: 2px;
+      background: linear-gradient(135deg, #ff00cc, #3333ff, #00ffff, #ffcc00);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      animation: borderGlow 5s linear infinite;
+    }
+
+    @keyframes borderGlow {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+
+    .content a {
+      display: inline-block;
+      background: linear-gradient(90deg, #ff0080, #ffcc00, #00ffff);
+      background-size: 300% 300%;
+      color: #1c1c1c;
+      font-weight: 700;
+      font-size: 1.5rem;
+      padding: 20px 60px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      animation: gradientFlow 5s linear infinite;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .content a:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 30px rgba(255,255,255,0.5), 0 0 60px #00ffff;
+    }
+
+    /* Animasyonlar */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .navbar h1 {
+        font-size: 1.4rem;
+      }
+      .navbar nav a {
+        margin-left: 15px;
+        font-size: 1rem;
+      }
+      .content {
+        margin: 100px 20px 30px;
+        padding: 40px 25px;
+      }
+      .content a {
+        font-size: 1.2rem;
+        padding: 16px 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="particles"></div>
+
+  <header class="navbar">
+    <h1>🌟 Ananas</h1>
+    <nav>
+      <a href="index.html">Ana Sayfa</a>
+      <a href="filmler.html">Filmler</a>
+      <a href="hakkimizda.html">Hakkımızda</a>
+    </nav>
+  </header>
+
+  <main class="content">
+    <a href="film5.html">▶️ Kiss X Sis - 1. Sezon 1. Bölüm</a>
+  </main>
+
+  <script>
+    // Parçacık üretimi
+    const particlesContainer = document.getElementById('particles');
+    const numParticles = 60;
+    for (let i = 0; i < numParticles; i++) {
+      const p = document.createElement('div');
+      p.classList.add('particle');
+      p.style.left = Math.random() * 100 + '%';
+      p.style.animationDuration = 8 + Math.random() * 6 + 's';
+      p.style.animationDelay = Math.random() * 10 + 's';
+      p.style.width = p.style.height = Math.random() * 4 + 2 + 'px';
+      particlesContainer.appendChild(p);
+    }
+  </script>
+</body>
+</html>
