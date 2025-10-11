@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Oyun Portalı — Basit</title>
+  <style>
+    :root{--bg:#0f1724;--card:#111827;--accent:#06b6d4;--muted:#94a3b8;color-scheme:dark}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;background:linear-gradient(180deg,#071022 0%,#0f1724 100%);color:#e6eef6;min-height:100vh;display:flex;flex-direction:column}
+    header{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid rgba(255,255,255,0.03)}
+    h1{font-size:18px;margin:0}
+    .container{max-width:1100px;margin:28px auto;padding:0 16px;width:100%}
+    .grid{display:grid;grid-template-columns:300px 1fr;gap:20px}
+    .sidebar{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:16px;border-radius:12px}
+    .game-card{padding:12px;border-radius:10px;margin-bottom:10px;background:rgba(255,255,255,0.02);cursor:pointer}
+    .game-card.active{outline:2px solid var(--accent)}
+    .play-area{background:linear-gradient(180deg,#071229 0%,#0b1621 100%);padding:18px;border-radius:12px;min-height:420px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+    .controls{display:flex;gap:8px;margin-top:12px}
+    button{background:var(--accent);border:none;padding:8px 12px;border-radius:8px;color:#042025;font-weight:600;cursor:pointer}
+    .muted{color:var(--muted);font-size:13px}
+    footer{margin-top:24px;padding:12px;text-align:center;color:var(--muted);font-size:13px}
+    /* responsive */
+    @media (max-width:800px){.grid{grid-template-columns:1fr;}.sidebar{order:2}.play-area{order:1}}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Ananas HUB — Demo</h1>
+    <div class="muted">Ananas tabanlı oyunlar</div>
+  </header>
+
+  <main class="container">
+    <div class="grid">
+      <aside class="sidebar">
+        <h3>Oyunlar</h3>
+        <div id="gamesList">
+          <div class="game-card active" data-game="snake">Snake (Yılan)</div>
+          <div class="game-card" data-game="breakout">Breakout (Top &amp; Tuğla)</div>
+          <div class="game-card" data-game="coming">Yakında...</div>
+          <div class="game-card" data-game="coming"> <a href="Fight-Game-master/dövüş.html" class="back-link">Dövüş oyunu</a></div>
+        </div>
+        <hr style="margin:12px 0;border:none;border-top:1px solid rgba(255,255,255,0.03)"/>
+        <div style="font-size:13px" class="muted">Nasıl eklenir: Her oyun bir HTML/JS modülü olmalı. "games" objesine fonksiyon ekleyin.</div>
+      </aside>
+
+      <section class="play-area">
+        <div id="gameContainer">
+          <!-- Oyunlar buraya yüklenecek -->
+         
+        </div>
+
+        <div class="controls">
+          <button id="startBtn">Başlat</button>
+          <button id="resetBtn">Sıfırla</button>
+          <div id="score" class="muted">Puan: 0</div>
+        </div>
+
+      </section>
+    </div>
+
+    <footer>
+    </footer>
+  </main>
+
+  <script>
+    // Basit oyun portalı: oyunları "games" nesnesine modül olarak ekleyin.
+    const games = {
+      snake: function(container, opts){
+        // Basit Snake oyunu canvas ile
+        container.innerHTML = '';
+        const cvs = document.createElement('canvas');
+        cvs.width = 520; cvs.height = 400; cvs.style.maxWidth='100%'; container.appendChild(cvs);
+        const ctx = cvs.getContext('2d');
+        const grid = 20; const cols = Math.floor(cvs.width/grid); const rows = Math.floor(cvs.height/grid);
+        let snake = [{x:8,y:10}]; let dir={x:1,y:0}; let apple = {x:12,y:8}; let running=false; let score=0; let tickId=null;
+        function draw(){
+          ctx.fillStyle='#031022'; ctx.fillRect(0,0,cvs.width,cvs.height);
+          // apple
+          ctx.fillStyle='#ff6b6b'; ctx.fillRect(apple.x*grid, apple.y*grid, grid-2, grid-2)
+          // snake
+          ctx.fillStyle='#34d399'; for(let s of snake){ctx.fillRect(s.x*grid, s.y*grid, grid-2, grid-2)}
+          document.getElementById('score').innerText = 'Puan: '+score;
+        }
+        function step(){
+          const head = {x:snake[0].x+dir.x, y:snake[0].y+dir.y};
+          // duvara çarpma: sar
+          if(head.x<0||head.x>=cols||head.y<0||head.y>=rows|| snake.some(seg=>seg.x===head.x&&seg.y===head.y)){
+            stop(); return;
+          }
+          snake.unshift(head);
+          if(head.x===apple.x && head.y===apple.y){ score+=10; placeApple(); }
+          else snake.pop();
+          draw();
+        }
+        function placeApple(){
+          while(true){
+            const x = Math.floor(Math.random()*cols); const y = Math.floor(Math.random()*rows);
+            if(!snake.some(s=>s.x===x&&s.y===y)){ apple={x,y}; break; }
+          }
+        }
+        function start(){ if(running) return; running=true; tickId=setInterval(step,100); }
+        function stop(){ running=false; clearInterval(tickId); alert('Oyun bitti! Puan: '+score); }
+        function reset(){ snake=[{x:8,y:10}]; dir={x:1,y:0}; placeApple(); score=0; draw(); }
+        // input
+        window.addEventListener('keydown', onKey);
+        function onKey(e){
+          if(e.key==='ArrowUp' && dir.y!==1) dir={x:0,y:-1};
+          if(e.key==='ArrowDown' && dir.y!==-1) dir={x:0,y:1};
+          if(e.key==='ArrowLeft' && dir.x!==1) dir={x:-1,y:0};
+          if(e.key==='ArrowRight' && dir.x!==-1) dir={x:1,y:0};
+          if(e.key===' '){ if(running) stop(); else start(); }
+        }
+        // expose controls
+        return {start,reset,stop}
+      },
+
+      breakout: function(container, opts){
+        container.innerHTML='';
+        const cvs = document.createElement('canvas'); cvs.width=640; cvs.height=360; cvs.style.maxWidth='100%'; container.appendChild(cvs);
+        const ctx=cvs.getContext('2d');
+        let paddle={x:270,y:330,w:100,h:10}; let ball={x:320,y:200,r:7,dx:3,dy:-3};
+        let bricks=[]; const rows=4,cols=8; const brickW=70,brickH=20; let running=false, tickId=null, score=0;
+        function initBricks(){bricks=[]; for(let r=0;r<rows;r++){for(let c=0;c<cols;c++){bricks.push({x: c*(brickW+6)+35, y: r*(brickH+6)+30, w:brickW, h:brickH, alive:true})}}}
+        function draw(){ ctx.clearRect(0,0,cvs.width,cvs.height); ctx.fillStyle='#fff'; ctx.fillRect(paddle.x,paddle.y,paddle.w,paddle.h); ctx.beginPath(); ctx.arc(ball.x,ball.y,ball.r,0,Math.PI*2); ctx.fill(); for(let b of bricks){ if(b.alive){ ctx.fillStyle='#60a5fa'; ctx.fillRect(b.x,b.y,b.w,b.h) }} document.getElementById('score').innerText='Puan: '+score; }
+        function step(){ ball.x+=ball.dx; ball.y+=ball.dy; if(ball.x<ball.r||ball.x>cvs.width-ball.r) ball.dx*=-1; if(ball.y<ball.r) ball.dy*=-1; if(ball.y>cvs.height){ stop(); return; } // paddle
+          if(ball.x>paddle.x && ball.x<paddle.x+paddle.w && ball.y+ball.r>paddle.y){ ball.dy*=-1 }
+          // bricks
+          for(let b of bricks){ if(b.alive){ if(ball.x>b.x && ball.x<b.x+b.w && ball.y>b.y && ball.y<b.y+b.h){ b.alive=false; ball.dy*=-1; score+=5 } }}
+          draw();
+        }
+        function start(){ if(running) return; running=true; tickId=setInterval(step,16); }
+        function stop(){ running=false; clearInterval(tickId); alert('Oyun bitti! Puan: '+score); }
+        function reset(){ paddle.x=270; ball.x=320; ball.y=200; ball.dx=3; ball.dy=-3; score=0; initBricks(); draw(); }
+        cvs.addEventListener('mousemove', e=>{ const rect=cvs.getBoundingClientRect(); const mx=e.clientX-rect.left; paddle.x=Math.max(0,Math.min(cvs.width-paddle.w, mx-paddle.w/2)); })
+        initBricks(); draw(); return {start,reset,stop}
+      }
+    }
+
+    // UI kontrol
+    const gamesList = document.getElementById('gamesList'); const gameContainer=document.getElementById('gameContainer'); let active=null; let activeInstance=null;
+    function loadGame(name){ if(!games[name]){ gameContainer.innerHTML = '<div class="muted">Oyun henüz eklenmemiş.</div>'; activeInstance=null; return; } active = name; document.querySelectorAll('.game-card').forEach(el=>el.classList.toggle('active', el.dataset.game===name)); activeInstance = games[name](gameContainer,{}); }
+    gamesList.addEventListener('click', e=>{ const card = e.target.closest('.game-card'); if(!card) return; const g = card.dataset.game; if(g==='coming') return; loadGame(g); })
+    document.getElementById('startBtn').addEventListener('click', ()=>{ if(activeInstance && activeInstance.start) activeInstance.start(); })
+    document.getElementById('resetBtn').addEventListener('click', ()=>{ if(activeInstance && activeInstance.reset) activeInstance.reset(); })
+
+    // ilk oyunu yükle
+    </script>
+   
+  </div>
+
+
+
+    <a href="index.html" class="back-link">← Ana Sayfaya Dön</a>
+  </div>
+</body>
+</html>

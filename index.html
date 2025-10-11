@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🍍 Ananas 🎬</title>
+  <style>
+    /* 🎬 GENEL AYARLAR */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #ff9800, #ffc107);
+      color: #222;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background 0.8s ease, color 0.8s ease;
+    }
+
+    body.dark {
+      background: linear-gradient(135deg, #0d0d0d, #202020);
+      color: #f5f5f5;
+    }
+
+    /* 🌈 RGB Animasyon */
+    @keyframes rgbFlow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    .rgb-text {
+      background: linear-gradient(90deg, red, blue, lime, magenta);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 400%;
+      animation: rgbFlow 4s linear infinite;
+    }
+
+    .rgb-border {
+      border-image: linear-gradient(90deg, red, blue, lime, magenta) 1;
+      animation: rgbFlow 5s linear infinite;
+    }
+
+    /* ==== NAVBAR ==== */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(30, 30, 30, 0.9);
+      color: white;
+      padding: 15px 30px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+      border-bottom: 2px solid transparent;
+      border-image: linear-gradient(90deg, red, blue, lime, magenta) 1;
+      animation: rgbFlow 5s linear infinite;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .navbar h1 {
+      font-size: 1.9rem;
+      color: #fff;
+      text-shadow: 0 0 15px rgba(255, 193, 7, 0.9);
+      background: linear-gradient(90deg, red, orange, yellow, lime, cyan, blue, magenta);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 400%;
+      animation: rgbFlow 6s linear infinite;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      font-weight: 600;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .navbar a:hover {
+      background: linear-gradient(90deg, red, yellow, lime, cyan, blue, magenta);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 300%;
+      animation: rgbFlow 2s linear infinite;
+    }
+
+    #darkToggle {
+      background: none;
+      border: none;
+      font-size: 1.7rem;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      background: linear-gradient(90deg, red, blue, magenta, lime);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 300%;
+      animation: rgbFlow 3s linear infinite;
+    }
+
+    #darkToggle:hover {
+      transform: rotate(25deg) scale(1.2);
+    }
+
+    /* ==== FEATURED FILM ==== */
+    .featured {
+      padding: 60px 20px;
+      text-align: center;
+      position: relative;
+      animation: fadeIn 1.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .featured-bg {
+      background: url("Ömer❤️Ahmet.jpg") center/cover no-repeat;
+      border-radius: 25px;
+      padding: 35px;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+      color: white;
+      transform: scale(1);
+      transition: all 0.5s ease;
+      border: 3px solid transparent;
+      border-image: linear-gradient(90deg, red, lime, blue, magenta) 1;
+      animation: rgbFlow 4s linear infinite;
+    }
+
+    .featured-bg::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 0;
+    }
+
+    .featured-bg:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 60px rgba(255, 193, 7, 0.7);
+    }
+
+    .watch-button {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      padding: 12px 22px;
+      border-radius: 40px;
+      font-weight: bold;
+      font-size: 1rem;
+      background: linear-gradient(90deg, red, lime, cyan, magenta);
+      background-size: 300%;
+      animation: rgbFlow 2s linear infinite, pulse 2s infinite;
+      transition: transform 0.3s ease;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .featured-info {
+      position: relative;
+      z-index: 1;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 25px;
+      border-radius: 15px;
+      margin-top: 20px;
+      backdrop-filter: blur(6px);
+    }
+
+    .featured-info h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, red, lime, blue, magenta);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 300%;
+      animation: rgbFlow 4s linear infinite;
+    }
+
+    .featured-info img {
+      width: 120px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    /* ==== MOVIE GRID ==== */
+    .movies {
+      padding: 60px 20px;
+    }
+
+    .movies h2 {
+      text-align: center;
+      font-size: 2rem;
+      color: #ff9800;
+      margin-bottom: 40px;
+      animation: fadeIn 1.2s ease;
+    }
+
+    .movie-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+    }
+
+    .movie-card {
+      width: 100px;
+      background: #fff;
+      color: #333;
+      border-radius: 10px;
+      overflow: hidden;
+      text-decoration: none;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      border: 3px solid transparent;
+      border-image: linear-gradient(45deg, red, lime, blue, magenta) 1;
+      background-size: 300%;
+      transition: all 0.4s ease;
+    }
+
+    .movie-card:hover {
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 0 25px rgba(255, 193, 7, 0.7);
+      animation: rgbFlow 3s linear infinite;
+    }
+
+    .movie-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .movie-card h3 {
+      text-align: center;
+      padding: 10px 0;
+      font-size: 1rem;
+      background: linear-gradient(90deg, red, lime, cyan, magenta);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 300%;
+      animation: rgbFlow 3s linear infinite;
+    }
+
+    /* ==== FOOTER ==== */
+    footer {
+      text-align: center;
+      padding: 25px;
+      background: #111;
+      color: white;
+      font-size: 0.95rem;
+      border-top: 2px solid transparent;
+      border-image: linear-gradient(90deg, red, lime, blue, magenta) 1;
+      animation: rgbFlow 5s linear infinite;
+    }
+
+    /* ==== RESPONSIVE ==== */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .movie-card {
+        width: 45%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .movie-card {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Üst Menü -->
+  <header class="navbar">
+    <h1 class="rgb-text">🍍 Ananas</h1>
+    <nav>
+      <ul>
+        <li><a href="#">Ana Sayfa</a></li>
+        <li><a href="#">Kategoriler</a></li>
+        <li><a href="#">Hakkımızda</a></li>
+      </ul>
+    </nav>
+    <button id="darkToggle">🌙</button>
+  </header>
+
+  <!-- 🎬 ÖNE ÇIKAN FİLM -->
+<section class="featured">
+  <div class="featured-bg">
+    <div class="featured-overlay"></div>
+
+    <div class="featured-content">
+      <img src="an.jpg" alt="Ömer Ahmet" class="featured-poster">
+      <div class="featured-info">
+        <h2 class="rgb-text">🎬 Ömer Ahmet</h2>
+        <p>Efsanevi karikatür serisi <strong>Ömer Ahmet</strong> — ANANAS FİLME ÖZEL! 🌟</p>
+        <a href="film.html?film=featured" class="watch-btn">▶ İzle</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* ==== YENİ ÖNE ÇIKAN FİLM ==== */
+.featured {
+  position: relative;
+  padding: 80px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 1.5s ease;
+}
+
+.featured-bg {
+  position: relative;
+  width: 90%;
+  max-width: 1100px;
+  height: 450px;
+  border-radius: 25px;
+  overflow: hidden;
+  background: linear-gradient(120deg, #ffb300, #ff9800, #ff6f00);
+  background-size: 300% 300%;
+  animation: rgbFlow 6s linear infinite;
+  box-shadow: 0 0 40px rgba(255, 193, 7, 0.4);
+  transition: all 0.6s ease;
+  perspective: 1000px;
+}
+
+.featured-bg:hover {
+  transform: scale(1.02) rotateX(3deg);
+  box-shadow: 0 0 60px rgba(255, 193, 7, 0.8);
+}
+
+.featured-overlay {
+  position: absolute;
+  inset: 0;
+  background: url("Ömer❤️Ahmet.jpg") center/cover no-repeat;
+  filter: brightness(0.4);
+  z-index: 1;
+  transition: transform 2s ease, filter 1.2s ease;
+}
+
+.featured-bg:hover .featured-overlay {
+  transform: scale(1.1);
+  filter: brightness(0.6);
+}
+
+.featured-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  height: 100%;
+  color: white;
+  padding: 0 30px;
+}
+
+.featured-poster {
+  width: 220px;
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(255, 152, 0, 0.8);
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
+}
+
+.featured-bg:hover .featured-poster {
+  transform: scale(1.05) rotateY(10deg);
+  box-shadow: 0 0 40px rgba(255, 193, 7, 0.9);
+}
+
+.featured-info {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 25px 35px;
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  max-width: 550px;
+  animation: fadeInUp 1.2s ease;
+  border: 2px solid transparent;
+  border-image: linear-gradient(90deg, red, lime, cyan, magenta) 1;
+}
+
+.featured-info h2 {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  background: linear-gradient(90deg, red, lime, blue, magenta);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 300%;
+  animation: rgbFlow 4s linear infinite;
+}
+
+.featured-info p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #eee;
+}
+
+.watch-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 30px;
+  border-radius: 40px;
+  font-weight: bold;
+  font-size: 1rem;
+  color: white;
+  text-decoration: none;
+  background: linear-gradient(90deg, red, lime, blue, magenta);
+  background-size: 300%;
+  animation: rgbFlow 3s linear infinite, pulse 2s infinite;
+  box-shadow: 0 0 20px rgba(255, 193, 7, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.watch-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 40px rgba(255, 193, 7, 0.9);
+}
+
+/* === ANİMASYONLAR === */
+@keyframes rgbFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* === MOBİL UYUMLU === */
+@media (max-width: 768px) {
+  .featured-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .featured-poster {
+    width: 160px;
+  }
+
+  .featured-info {
+    max-width: 90%;
+  }
+}
+</style>
+
+
+ <!-- 🎞️ Tüm Filmler -->
+<section class="movies">
+  <h2 class="rgb-text">🎞️ Tüm Filmler</h2>
+  <div class="movie-grid">
+    
+    <!-- 🟡 Film 1 -->
+    <a href="bölümler3.html" class="movie-card hover-zoom glow-border">
+      <div class="movie-img-wrap">
+        <img src="an.jpg" alt="Ömer Ahmet">
+      </div>
+      <div class="movie-info">
+        <h3 class="rgb-text">Ömer Ahmet</h3>
+        <p>Efsanevi dostluk hikayesi 💫</p>
+      </div>
+    </a>
+
+    <!-- 🔵 Film 2 -->
+    <a href="Bölümler2.html" class="movie-card hover-zoom glow-border">
+      <div class="movie-img-wrap">
+        <img src="indir.jpg" alt="Spy X Family">
+      </div>
+      <div class="movie-info">
+        <h3 class="rgb-text">Spy X Family</h3>
+        <p>Aile, casusluk ve komedi 🎭</p>
+      </div>
+    </a>
+
+    <!-- 🔴 Film 3 -->
+    <a href="bölümler.html" class="movie-card hover-zoom glow-border">
+      <div class="movie-img-wrap">
+        <img src="Kaiyari_Anime_01.webp" alt="Redo Of Healer">
+      </div>
+      <div class="movie-info">
+        <h3 class="rgb-text">Redo Of Healer</h3>
+        <p>İntikam herkese gerekir</p>
+      </div>
+    </a>
+<!-- 🔵 Film 4 -->
+    <a href="bölümler4.html" class="movie-card hover-zoom glow-border">
+      <div class="movie-img-wrap">
+        <img src="kiw.webp" alt="Kiss X Sis">
+      </div>
+      <div class="movie-info">
+        <h3 class="rgb-text">Kiss X Sis</h3>
+        <p>Ailecek izleyebileceğiniz eğlenceli ve eğitici bir anime</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<style>
+/* 🎞️ Tüm Filmler - Gelişmiş Stil */
+.movies {
+  padding: 80px 20px;
+  text-align: center;
+  animation: fadeIn 1.2s ease;
+}
+
+.movies h2 {
+  font-size: 2.4rem;
+  margin-bottom: 40px;
+  text-shadow: 0 0 25px rgba(255, 193, 7, 0.6);
+}
+
+/* 🎬 Film Kartları */
+.movie-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 35px;
+}
+
+.movie-card {
+  width: 230px;
+  background: rgba(30, 30, 30, 0.6);
+  border-radius: 18px;
+  text-decoration: none;
+  color: white;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+  position: relative;
+  backdrop-filter: blur(8px);
+}
+
+body.light .movie-card {
+  background: rgba(255, 255, 255, 0.9);
+  color: #111;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+/* 🎞️ Film Görseli */
+.movie-img-wrap {
+  overflow: hidden;
+  border-radius: 18px 18px 0 0;
+  height: 320px;
+}
+
+.movie-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.movie-card:hover img {
+  transform: scale(1.15) rotate(2deg);
+}
+
+/* ✨ Film Bilgisi */
+.movie-info {
+  padding: 15px 10px 20px;
+  background: rgba(0, 0, 0, 0.5);
+  transition: all 0.4s ease;
+}
+
+body.light .movie-info {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.movie-info h3 {
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+}
+
+.movie-info p {
+  font-size: 0.95rem;
+  color: #ddd;
+}
+
+body.light .movie-info p {
+  color: #333;
+}
+
+/* 🌈 RGB Akıcı Parlayan Çerçeve (Köşesiz versiyon) */
+.glow-border {
+  position: relative;
+  border: none;
+  overflow: hidden;
+}
+
+.glow-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px; /* çerçeve kalınlığı */
+  background: linear-gradient(90deg, red, orange, yellow, lime, cyan, blue, magenta, red);
+  background-size: 400% 400%;
+  animation: rgbFlow 6s linear infinite;
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  border-radius: 0; /* köşesiz */
+}
+
+@keyframes rgbFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 🎥 Hover Efektleri */
+.movie-card {
+  border-radius: 0; /* köşesiz hale getir */
+}
+
+.movie-card:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.6);
+}
+
+.movie-card:hover .movie-info {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+
+/* 📱 Mobil Uyumu */
+@media (max-width: 768px) {
+  .movie-grid {
+    gap: 25px;
+  }
+  .movie-card {
+    width: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-card {
+    width: 85%;
+  }
+  .movie-img-wrap {
+    height: 240px;
+  }
+}
+</style>
+
+
+  <!-- Alt Bilgi -->
+  <footer>
+    <p class="rgb-text">© 2025 Ananas | Tüm hakları saklıdır.</p>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    const toggleBtn = document.getElementById("darkToggle");
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme === "dark") {
+      document.body.classList.add("dark");
+      toggleBtn.textContent = "☀️";
+    }
+
+    toggleBtn.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      const isDark = document.body.classList.contains("dark");
+      toggleBtn.textContent = isDark ? "☀️" : "🌙";
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
+  </script>
+  <script>
+(function() {
+  // Oluştur: track + thumb
+  const track = document.createElement('div');
+  track.id = 'csb-track';
+  track.innerHTML = '<div class="csb-track-bg"></div><div id="csb-thumb" role="scrollbar" aria-orientation="vertical" aria-label="Sayfa kaydırma"></div>';
+  document.body.appendChild(track);
+
+  const thumb = document.getElementById('csb-thumb');
+  const trackEl = document.getElementById('csb-track');
+
+  // Hesaplama fonksiyonu
+  function updateThumb() {
+    const doc = document.documentElement;
+    const scrollTop = window.scrollY || doc.scrollTop;
+    const scrollHeight = Math.max(doc.scrollHeight, document.body.scrollHeight);
+    const clientHeight = doc.clientHeight;
+
+    const trackHeight = trackEl.clientHeight;
+    // thumb yüksekliği: görünür oranı
+    const thumbH = Math.max(Math.round((clientHeight / scrollHeight) * trackHeight), 48);
+    thumb.style.height = thumbH + 'px';
+
+    const maxThumbTop = trackHeight - thumbH;
+    const ratio = scrollTop / Math.max(scrollHeight - clientHeight, 1);
+    const top = Math.round(ratio * maxThumbTop);
+    thumb.style.transform = 'translateY(' + top + 'px)';
+  }
+
+  // Başlangıç hesapla
+  updateThumb();
+
+  // Dinamik güncelle
+  let rafId = null;
+  function onScrollOrResize() {
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(updateThumb);
+  }
+  window.addEventListener('scroll', onScrollOrResize, {passive: true});
+  window.addEventListener('resize', onScrollOrResize);
+
+  // Track tıklayınca: oraya kaydır
+  trackEl.addEventListener('click', function(e) {
+    // tıklama thumb üzerinde ise, y for dragging handled separately
+    if (e.target === thumb) return;
+    const rect = trackEl.getBoundingClientRect();
+    const clickY = e.clientY - rect.top;
+    const trackHeight = rect.height;
+    const doc = document.documentElement;
+    const scrollHeight = Math.max(doc.scrollHeight, document.body.scrollHeight);
+    const clientHeight = doc.clientHeight;
+    // center the thumb around click
+    const thumbH = thumb.offsetHeight;
+    const maxThumbTop = trackHeight - thumbH;
+    const targetTop = Math.max(0, Math.min(maxThumbTop, clickY - thumbH / 2));
+    const ratio = targetTop / maxThumbTop;
+    const targetScroll = Math.round(ratio * (scrollHeight - clientHeight));
+    window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+  });
+
+  // Dragging (mouse + touch)
+  let isDragging = false;
+  let startY = 0;
+  let startTop = 0;
+
+  function startDrag(e) {
+    e.preventDefault();
+    isDragging = true;
+    startY = (e.touches ? e.touches[0].clientY : e.clientY);
+    // computed translateY
+    const transform = window.getComputedStyle(thumb).transform;
+    if (transform && transform !== 'none') {
+      const matrix = new WebKitCSSMatrix(transform);
+      startTop = matrix.m42; // translateY
+    } else {
+      startTop = 0;
+    }
+    document.documentElement.classList.add('no-select');
+    document.body.classList.add('no-select');
+    // visual feedback
+    thumb.style.transition = 'transform 0s';
+  }
+
+  function onMove(e) {
+    if (!isDragging) return;
+    const curY = (e.touches ? e.touches[0].clientY : e.clientY);
+    const dy = curY - startY;
+    const rect = trackEl.getBoundingClientRect();
+    const trackHeight = rect.height;
+    const thumbH = thumb.offsetHeight;
+    const maxThumbTop = trackHeight - thumbH;
+    let newTop = Math.max(0, Math.min(maxThumbTop, startTop + dy));
+    const ratio = newTop / Math.max(maxThumbTop, 1);
+    const doc = document.documentElement;
+    const scrollHeight = Math.max(doc.scrollHeight, document.body.scrollHeight);
+    const clientHeight = doc.clientHeight;
+    const targetScroll = Math.round(ratio * (scrollHeight - clientHeight));
+    window.scrollTo({ top: targetScroll, behavior: 'auto' });
+  }
+
+  function stopDrag() {
+    if (!isDragging) return;
+    isDragging = false;
+    document.documentElement.classList.remove('no-select');
+    document.body.classList.remove('no-select');
+    thumb.style.transition = '';
+  }
+
+  // Mouse events
+  thumb.addEventListener('mousedown', startDrag);
+  window.addEventListener('mousemove', onMove);
+  window.addEventListener('mouseup', stopDrag);
+
+  // Touch events
+  thumb.addEventListener('touchstart', startDrag, {passive:false});
+  window.addEventListener('touchmove', onMove, {passive:false});
+  window.addEventListener('touchend', stopDrag);
+
+  // Recalculate thumb on load (images/fonts may change height)
+  window.addEventListener('load', updateThumb);
+
+  // Recalc if DOM changes size (e.g. images load)
+  const ro = new ResizeObserver(updateThumb);
+  ro.observe(document.documentElement);
+  ro.observe(trackEl);
+
+  // small helper class for no-select (to prevent text selection during drag)
+  const styleNoSelect = document.createElement('style');
+  styleNoSelect.innerHTML = '.no-select, .no-select * { user-select: none !important; -webkit-user-select: none !important; }';
+  document.head.appendChild(styleNoSelect);
+
+})();
+</script>
+<!-- === SUYA TAŞ ATMA EFEKTİ === -->
+<style>
+.ripple-ring {
+  position: fixed;
+  pointer-events: none;
+  border-radius: 50%;
+  border: 2px solid rgba(0,150,255,0.6); /* halka kenarı */
+  transform: scale(0.2);
+  opacity: 0.9;
+  animation: rippleRingAnim 1.2s ease-out forwards;
+  z-index: 99999;
+}
+
+@keyframes rippleRingAnim {
+  0%   { transform: scale(0.2); opacity: 0.9; }
+  70%  { transform: scale(2); opacity: 0.4; }
+  100% { transform: scale(3); opacity: 0; }
+}
+</style>
+
+<script>
+(function() {
+  const DURATION = 1200; // her halka animasyonu
+  const RING_COUNT = 3;  // kaç halka çıksın
+  const DELAY = 200;     // halkalar arası gecikme (ms)
+
+  document.addEventListener('pointerdown', function(e) {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+
+    for (let i = 0; i < RING_COUNT; i++) {
+      setTimeout(() => {
+        const size = 80; // halka boyutu
+        const ring = document.createElement('span');
+        ring.className = 'ripple-ring';
+        ring.style.width = ring.style.height = size + 'px';
+        ring.style.left = (e.clientX - size / 2) + 'px';
+        ring.style.top  = (e.clientY - size / 2) + 'px';
+
+        document.body.appendChild(ring);
+
+        setTimeout(() => ring.remove(), DURATION + 50);
+      }, i * DELAY);
+    }
+  }, { passive: true });
+})();
+</script>
+<!-- === / SUYA TAŞ ATMA EFEKTİ === -->
+<!-- === OFFLINE OYUN: Sayfa offline ise gösterilir (place BEFORE </body>) === -->
+<style>
+/* Offline overlay & oyun stili (ananas-offline-game) */
+#ananas-offline-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;              /* aktif olmadığında gizli */
+  align-items: center;
+  justify-content: center;
+  background: rgba(205, 158, 3, 0.6);
+  z-index: 200000;
+  backdrop-filter: blur(4px);
+  padding: 20px;
+}
+
+#ananas-offline-panel {
+  width: min(920px, 95%);
+  max-width: 920px;
+  background: linear-gradient(180deg, #0b1220, #071021);
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  color: #eaf6ff;
+  display:flex;
+  gap:16px;
+  align-items:center;
+  justify-content:center;
+  flex-direction: column;
+}
+
+/* Canvas kutusu */
+#ananas-game-canvas {
+  width: 100%;
+  height: 300px;
+  border-radius: 8px;
+  background: linear-gradient(180deg,#dff3ff,#cfefff);
+  box-shadow: inset 0 -8px 20px rgba(0,0,0,0.06);
+  touch-action: none;
+}
+
+/* Başlık ve kontrol notu */
+#ananas-offline-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: .2px;
+  margin-bottom: 6px;
+}
+
+#ananas-offline-sub {
+  font-size: 0.88rem;
+  opacity: .85;
+  margin-bottom: 8px;
+}
+
+/* Butonlar */
+.ananas-btn {
+  background: linear-gradient(90deg,#9ea71e,oklch(69.822% 0.14828 113.654));
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+#ananas-hud {
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  margin-top: 8px;
+}
+
+/* Mobil uyum: canvas yüksekliğini küçült */
+@media (max-width:600px){
+  #ananas-game-canvas { height: 200px; }
+  #ananas-offline-panel { padding: 12px; }
+}
+</style>
+</div>
+
+
+
+    <a href="oyun.html" class="back-link">OYUN OYNA</a>
+  </div>
+<script>
+
+

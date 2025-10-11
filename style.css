@@ -833,5 +833,125 @@ body.dark::-webkit-scrollbar-thumb {
 @media (prefers-reduced-motion: reduce) {
   #csb-thumb { animation: none !important; transition: none !important; }
 }
+/* 📱 Mobil Uyumu */
+@media (max-width: 480px) {
+  .movie-card {
+    width: 85%;
+  }
+  .movie-img-wrap {
+    height: 240px;
+  }
+}
 
+/* Ripple efektinin stili */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple-animation 0.6s linear;
+  background: rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+  z-index: 9999;
+}
 
+@keyframes ripple-animation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+  #offline-games-container h2 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    color: #ff9800;
+  }
+  .ananas-btn {
+    background: linear-gradient(90deg,#00a8ff,#0077d9);
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    margin: 0 4px;
+    transition: transform 0.2s;
+  }
+  .ananas-btn:hover {
+    transform: scale(1.05);
+  }
+  #offline-score {
+    font-size: 1rem;
+    color: #ffdd57;
+  }
+<style>
+  /* === Genel oyun paneli === */
+  #offline-games-container {
+    background: #f9f9f9;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    font-family: "Segoe UI", sans-serif;
+  }
+
+  #offline-games-container h2 {
+    font-size: 22px;
+    margin-bottom: 16px;
+    color: #333;
+  }
+
+  /* === Skor yazısı === */
+  #offline-score {
+    font-size: 18px;
+    color: #222;
+  }
+
+  /* === Oyun Canvas === */
+  #offline-game-canvas-container {
+    margin-top: 15px;
+  }
+
+  #offline-game-canvas-container canvas {
+    border: 2px solid #444;
+    border-radius: 10px;
+    background: #eaf6ff; /* varsayılan arka plan */
+  }
+
+  /* === Butonlar === */
+  .ananas-btn {
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    border: none;
+    color: white;
+    padding: 10px 18px;
+    margin: 5px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: bold;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  }
+
+  .ananas-btn:hover {
+    transform: scale(1.07);
+    background: linear-gradient(135deg, #00f2fe, #4facfe);
+  }
+
+  .ananas-btn:active {
+    transform: scale(0.95);
+  }
+
+  /* === Mobil uyum === */
+  @media (max-width: 600px) {
+    #offline-game-canvas-container canvas {
+      width: 100% !important;
+      height: auto !important;
+    }
+    .ananas-btn {
+      width: 100%;
+      margin: 6px 0;
+    }
+  }
+</style>
